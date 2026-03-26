@@ -14,7 +14,7 @@ export function RefreshButton() {
   return (
     <button
       onClick={handleRefresh}
-      className="flex items-center space-x-2 rounded-full bg-accent-blue/10 px-4 py-2 text-sm font-medium text-accent-blue border border-accent-blue/20 hover:bg-accent-blue/20 transition-colors"
+      className="flex items-center space-x-2 rounded border-2 border-foreground bg-white px-4 py-2 text-sm font-medium text-foreground hover:bg-foreground hover:text-background transition-colors uppercase tracking-wide"
     >
       <RefreshCw className="h-4 w-4" />
       <span>刷新</span>

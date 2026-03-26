@@ -27,58 +27,66 @@ export function ConflictTimelineChart({ data }: ConflictTimelineChartProps) {
 
   return (
     <section className="mb-12">
-      <div className="mb-6">
-        <h2 className="text-2xl md:text-3xl font-bold mb-2">
+      <div className="mb-6 pb-4 border-b border-border">
+        <h2 className="serif text-3xl md:text-4xl font-bold mb-2 text-foreground">
           冲突时间线
         </h2>
-        <p className="text-foreground/60">
+        <p className="text-muted leading-relaxed">
           30天关键冲突指标趋势分析
         </p>
       </div>
 
-      <div className="bento-card">
+      <div className="editorial-card">
         <ResponsiveContainer width="100%" height={400}>
           <LineChart data={formattedData}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e5e5" />
             <XAxis
               dataKey="date"
-              stroke="#71717a"
-              style={{ fontSize: "12px" }}
+              stroke="#737373"
+              style={{ fontSize: "12px", fontFamily: "Inter, sans-serif" }}
             />
-            <YAxis stroke="#71717a" style={{ fontSize: "12px" }} />
+            <YAxis 
+              stroke="#737373" 
+              style={{ fontSize: "12px", fontFamily: "Inter, sans-serif" }} 
+            />
             <Tooltip
               contentStyle={{
-                backgroundColor: "#18181b",
-                border: "1px solid #27272a",
-                borderRadius: "8px",
-                color: "#ededed",
+                backgroundColor: "white",
+                border: "1px solid #e5e5e5",
+                borderRadius: "4px",
+                color: "#1a1a1a",
+                fontFamily: "Inter, sans-serif",
               }}
             />
             <Legend
-              wrapperStyle={{ fontSize: "14px", color: "#a1a1aa" }}
+              wrapperStyle={{ 
+                fontSize: "13px", 
+                color: "#737373",
+                fontFamily: "Inter, sans-serif",
+              }}
             />
             <Line
               type="monotone"
               dataKey="casualties"
-              stroke="#ef4444"
-              strokeWidth={2}
-              dot={{ fill: "#ef4444", r: 3 }}
+              stroke="#991b1b"
+              strokeWidth={2.5}
+              dot={{ fill: "#991b1b", r: 4 }}
               name="伤亡人数"
             />
             <Line
               type="monotone"
               dataKey="diplomaticEvents"
-              stroke="#a855f7"
-              strokeWidth={2}
-              dot={{ fill: "#a855f7", r: 3 }}
+              stroke="#1e40af"
+              strokeWidth={2.5}
+              dot={{ fill: "#1e40af", r: 4 }}
               name="外交事件"
             />
             <Line
               type="monotone"
               dataKey="militaryActions"
-              stroke="#3b82f6"
-              strokeWidth={2}
-              dot={{ fill: "#3b82f6", r: 3 }}
+              stroke="#b45309"
+              strokeWidth={2.5}
+              dot={{ fill: "#b45309", r: 4 }}
               name="军事行动"
             />
           </LineChart>

@@ -19,7 +19,7 @@ We are creating a new Next.js application to track global trends, starting with 
 
 - **Node.js Version**: v24.10.0. We will use `nvm use v24.10.0` to ensure consistency across environments.
 - **Framework**: Next.js (App Router). It provides excellent performance, SEO capabilities, and seamless integration with Vercel.
-- **Styling & UI Paradigm**: Tailwind CSS. The design will heavily borrow from the **Tailwind CSS official website aesthetic**—favoring a dark mode default, bento-box grid layouts for data presentation, subtle border gradients, glassmorphism, and high-quality typography (e.g., Inter font). This ensures the serious topic is presented in a modern, objective, and highly readable "dashboard" format.
+- **Styling & UI Paradigm**: Tailwind CSS. The design will adopt an **Editorial / Newsroom aesthetic** (similar to NYT or Reuters). This means relying on a clean white/off-white background, classic grid layouts, elegant serif fonts for headings (to convey authority), and clean sans-serif for data/body text. Color will be used extremely sparingly—primarily black/gray for text, with semantic colors (dark red for escalation, muted blue/green for de-escalation) used only to highlight critical data points.
 - **Data Visualization**: We will use a lightweight charting library like `recharts` or `chart.js` (React wrapper) to render conflict indicators and timeline trends, as they integrate perfectly with Tailwind and React.
 - **Deployment**: Vercel. It offers a generous free tier and native support for Next.js features.
 - **Data Fetching & Sourcing Strategy**: 

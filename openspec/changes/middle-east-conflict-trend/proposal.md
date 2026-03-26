@@ -5,7 +5,7 @@ The goal is to create a new "trend" project to track and display current global 
 ## What Changes
 
 - Initialize a new Next.js project optimized for Vercel deployment.
-- Adopt a modern, high-tech design language inspired by the Tailwind CSS official website (e.g., dark mode preference, bento-box layouts, subtle gradients, glassmorphism, and excellent typography).
+- Adopt a serious, editorial "Newsroom" design language inspired by professional journalism (e.g., NYT, Reuters). This means clean white/off-white backgrounds, classic grid layouts, elegant serif typography for headings, and highly restrained use of color (using red only for escalation/danger and blue/green for de-escalation).
 - Develop a specific trend page dedicated to the "Middle East Conflict", featuring:
   - **Faction Comparison**: A left-vs-right split layout detailing the opposing sides (e.g., Israel vs. Hamas/Hezbollah/Iran), their objectives, and current status.
   - **Conflict Trend Indicators Dashboard**: Key metrics focusing on the macro status and direction of the conflict (e.g., Escalation Level, Diplomatic/Negotiation Status, Ceasefire Probability, Active Fronts Intensity) to answer "Is it escalating, de-escalating, or ending?" displayed in a clear, bento-grid style.

@@ -1,31 +1,40 @@
 import Link from "next/link";
-import { BarChart3 } from "lucide-react";
+import { Newspaper } from "lucide-react";
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border glassmorphism">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
-        <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-          <BarChart3 className="h-6 w-6 text-accent-blue" />
-          <span className="text-xl font-bold bg-gradient-to-r from-accent-blue to-accent-purple bg-clip-text text-transparent">
-            全球趋势
-          </span>
-        </Link>
-        
-        <nav className="flex items-center space-x-6">
-          <Link
-            href="/trends"
-            className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-          >
-            趋势
+    <header className="newsroom-header sticky top-0 z-50 w-full">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="flex h-20 items-center justify-between border-b border-border">
+          <Link href="/" className="hover:opacity-70 transition-opacity">
+            <div className="flex items-center space-x-3">
+              <Newspaper className="h-7 w-7 text-foreground" />
+              <div>
+                <h1 className="serif text-2xl font-bold tracking-tight text-foreground">
+                  全球趋势
+                </h1>
+                <p className="text-xs text-muted uppercase tracking-wider">
+                  GLOBAL TRENDS
+                </p>
+              </div>
+            </div>
           </Link>
-          <Link
-            href="#"
-            className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-          >
-            关于
-          </Link>
-        </nav>
+          
+          <nav className="flex items-center space-x-8">
+            <Link
+              href="/trends"
+              className="text-sm font-medium text-foreground hover:text-muted transition-colors uppercase tracking-wider"
+            >
+              趋势
+            </Link>
+            <Link
+              href="#"
+              className="text-sm font-medium text-foreground hover:text-muted transition-colors uppercase tracking-wider"
+            >
+              关于
+            </Link>
+          </nav>
+        </div>
       </div>
     </header>
   );

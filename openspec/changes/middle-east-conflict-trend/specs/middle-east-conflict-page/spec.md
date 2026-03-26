@@ -1,11 +1,11 @@
 ## ADDED Requirements
 
 ### Requirement: Middle East Conflict Trend Page
-The system SHALL provide a dedicated page at `/trends/middle-east-conflict` to display information related to the Middle East conflict, utilizing a modern, dark-themed, dashboard-like UI.
+The system SHALL provide a dedicated page at `/trends/middle-east-conflict` to display information related to the Middle East conflict, utilizing a serious, editorial/newsroom design aesthetic.
 
 #### Scenario: User navigates to the trend page
 - **WHEN** the user visits `/trends/middle-east-conflict`
-- **THEN** the page renders successfully with relevant content, utilizing Tailwind CSS official site design patterns (bento grids, subtle glows).
+- **THEN** the page renders successfully with relevant content, utilizing a clean, white/off-white background, classic grid layouts, and authoritative serif typography.
 
 #### Scenario: Page is responsive
 - **WHEN** the user views the page on a mobile device

@@ -1,6 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&family=Inter:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @layer base {
+  :root {
+    --color-background: #fafafa;
+    --color-foreground: #1a1a1a;
+    --color-border: #e5e5e5;
+    --color-muted: #737373;
+  }
+
   * {
     border-color: var(--color-border);
   }
@@ -8,6 +16,11 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Merriweather', Georgia, serif;
   }
 }
 
@@ -16,35 +29,51 @@
     text-wrap: balance;
   }
   
-  .bento-card {
-    border-radius: 0.75rem;
+  .editorial-card {
+    border-radius: 0.25rem;
     border: 1px solid var(--color-border);
-    background-color: rgb(24 24 27 / 0.5);
+    background-color: white;
     padding: 1.5rem;
-    backdrop-filter: blur(12px);
-    transition-property: all;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 150ms;
+    transition: box-shadow 0.2s ease;
   }
   
-  .bento-card:hover {
-    border-color: rgb(63 63 70);
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  .editorial-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
   
-  .glassmorphism {
-    background-color: rgb(255 255 255 / 0.05);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgb(255 255 255 / 0.1);
+  .newsroom-header {
+    background-color: white;
+    border-bottom: 2px solid var(--color-foreground);
+  }
+  
+  .serif {
+    font-family: 'Merriweather', Georgia, serif;
+  }
+  
+  .status-escalating {
+    color: #991b1b;
+    background-color: #fee2e2;
+  }
+  
+  .status-stable {
+    color: #1e40af;
+    background-color: #dbeafe;
+  }
+  
+  .status-deescalating {
+    color: #065f46;
+    background-color: #d1fae5;
   }
 }
 
 @theme {
-  --color-background: #0a0a0a;
-  --color-foreground: #ededed;
-  --color-border: #27272a;
+  --color-background: #fafafa;
+  --color-foreground: #1a1a1a;
+  --color-border: #e5e5e5;
+  --color-muted: #737373;
   
-  --color-accent-blue: #3b82f6;
-  --color-accent-purple: #a855f7;
-  --color-accent-cyan: #06b6d4;
+  --color-danger: #991b1b;
+  --color-warning: #b45309;
+  --color-success: #065f46;
+  --color-info: #1e40af;
 }

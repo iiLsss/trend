@@ -23,7 +23,7 @@ export function ConflictIndicatorsGrid({
       status: indicators.escalationLevel.status,
       trend: indicators.escalationLevel.trend,
       icon: AlertTriangle,
-      color: "red",
+      colorClass: getTrendColorClass(indicators.escalationLevel.trend, true),
     },
     {
       label: "外交进展",
@@ -31,14 +31,14 @@ export function ConflictIndicatorsGrid({
       subValue: `${indicators.diplomaticProgress.recentEvents} 个近期事件`,
       trend: indicators.diplomaticProgress.trend,
       icon: Handshake,
-      color: "blue",
+      colorClass: getTrendColorClass(indicators.diplomaticProgress.trend),
     },
     {
       label: "停火可能性",
       value: `${indicators.ceasefireLikelihood.probability}%`,
       trend: indicators.ceasefireLikelihood.trend,
       icon: Shield,
-      color: "green",
+      colorClass: getTrendColorClass(indicators.ceasefireLikelihood.trend),
     },
     {
       label: "地区影响",
@@ -46,17 +46,17 @@ export function ConflictIndicatorsGrid({
       status: `严重程度: ${indicators.regionalImpact.severity}`,
       trend: indicators.regionalImpact.trend,
       icon: Globe,
-      color: "orange",
+      colorClass: getTrendColorClass(indicators.regionalImpact.trend, true),
     },
   ];
 
   return (
     <section className="mb-12">
-      <div className="mb-6">
-        <h2 className="text-2xl md:text-3xl font-bold mb-2">
+      <div className="mb-6 pb-4 border-b border-border">
+        <h2 className="serif text-3xl md:text-4xl font-bold mb-2 text-foreground">
           冲突趋势指标
         </h2>
-        <p className="text-foreground/60">
+        <p className="text-muted leading-relaxed">
           宏观层面追踪冲突当前状态和发展方向
         </p>
       </div>
@@ -70,6 +70,13 @@ export function ConflictIndicatorsGrid({
   );
 }
 
+function getTrendColorClass(trend: "up" | "down" | "stable", inverted = false): string {
+  if (inverted) {
+    return trend === "up" ? "text-danger" : trend === "down" ? "text-success" : "text-info";
+  }
+  return trend === "up" ? "text-success" : trend === "down" ? "text-danger" : "text-info";
+}
+
 interface MetricCardProps {
   metric: {
     label: string;
@@ -78,7 +85,7 @@ interface MetricCardProps {
     subValue?: string;
     trend: "up" | "down" | "stable";
     icon: any;
-    color: string;
+    colorClass: string;
   };
 }
 
@@ -91,36 +98,32 @@ function MetricCard({ metric }: MetricCardProps) {
     stable: Minus,
   };
 
-  const trendColors = {
-    up: "text-red-400",
-    down: "text-green-400",
-    stable: "text-gray-400",
-  };
-
   const TrendIcon = trendIcons[metric.trend];
 
   return (
-    <div className="bento-card relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-accent-blue/5 to-transparent rounded-full -mr-16 -mt-16" />
+    <div className="editorial-card">
+      <div className="flex items-start justify-between mb-4">
+        <div className="rounded bg-foreground/5 p-2">
+          <Icon className="h-6 w-6 text-foreground" />
+        </div>
+        <TrendIcon className={`h-5 w-5 ${metric.colorClass}`} strokeWidth={2.5} />
+      </div>
 
-      <div className="relative">
-        <div className="flex items-center justify-between mb-4">
-          <div className="rounded-lg bg-accent-blue/10 p-2">
-            <Icon className="h-5 w-5 text-accent-blue" />
+      <div className="space-y-2">
+        <div className="serif text-3xl font-bold text-foreground">{metric.value}</div>
+        <div className="text-sm font-medium text-foreground uppercase tracking-wide">
+          {metric.label}
+        </div>
+        {metric.status && (
+          <div className="text-xs text-muted pt-2 border-t border-border">
+            {metric.status}
           </div>
-          <TrendIcon className={`h-4 w-4 ${trendColors[metric.trend]}`} />
-        </div>
-
-        <div className="space-y-1">
-          <div className="text-2xl font-bold">{metric.value}</div>
-          <div className="text-sm text-foreground/60">{metric.label}</div>
-          {metric.status && (
-            <div className="text-xs text-foreground/40 mt-1">{metric.status}</div>
-          )}
-          {metric.subValue && (
-            <div className="text-xs text-foreground/40 mt-1">{metric.subValue}</div>
-          )}
-        </div>
+        )}
+        {metric.subValue && (
+          <div className="text-xs text-muted pt-2 border-t border-border">
+            {metric.subValue}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -4,12 +4,12 @@
 - [x] 1.2 Initialize a new Next.js project with App Router and Tailwind CSS
 - [x] 1.3 Install additional UI/Visualization dependencies (e.g., `lucide-react` for icons, `recharts` for charts, `clsx` and `tailwind-merge` for utility classes)
 - [x] 1.4 Install data fetching/scraping dependencies (e.g., `rss-parser` for news feeds, `cheerio` for HTML scraping)
-- [x] 1.5 Clean up the default boilerplate code, configure dark mode, and set up basic global styles (Tailwind config for custom colors/fonts)
+- [x] 1.5 Clean up the default boilerplate code, remove dark mode defaults, and set up basic global styles for an Editorial/Newsroom aesthetic (e.g., configure Serif fonts like Merriweather or Playfair Display in Tailwind config)
 - [x] 1.6 Configure the project for Vercel deployment (e.g., ensure build scripts are correct)
 
 ## 2. Core Layout and Data Layer
 
-- [x] 2.1 Create a responsive main layout component (header, main content area, footer) with a dark-theme default
+- [x] 2.1 Create a responsive main layout component (header, main content area, footer) with a clean, white/off-white newsroom theme
 - [x] 2.2 Set up the routing structure for the trends section (`/trends`)
 - [x] 2.3 Set up the **Real-time Data Fetching Layer**: Create utility functions (`lib/data.ts`) to fetch live updates via RSS (e.g., using `rss-parser` on Al Jazeera/Reuters feeds) and scrape/fetch indicator data.
 - [x] 2.4 Configure **Vercel Cron Job**: Create `vercel.json` and an API route (e.g., `/api/cron`) to trigger a daily data update at 04:00 UTC (07:00 AM Middle East time).

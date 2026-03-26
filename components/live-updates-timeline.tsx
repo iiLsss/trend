@@ -10,14 +10,16 @@ export function LiveUpdatesTimeline({ updates }: LiveUpdatesTimelineProps) {
   if (updates.length === 0) {
     return (
       <section className="mb-12">
-        <div className="mb-6">
-          <h2 className="text-2xl md:text-3xl font-bold mb-2">实时动态</h2>
-          <p className="text-foreground/60">
+        <div className="mb-6 pb-4 border-b border-border">
+          <h2 className="serif text-3xl md:text-4xl font-bold mb-2 text-foreground">
+            实时动态
+          </h2>
+          <p className="text-muted leading-relaxed">
             来自该地区的最新消息和发展
           </p>
         </div>
 
-        <div className="bento-card text-center text-foreground/60">
+        <div className="editorial-card text-center text-muted">
           暂无更新。请稍后再查看。
         </div>
       </section>
@@ -26,15 +28,17 @@ export function LiveUpdatesTimeline({ updates }: LiveUpdatesTimelineProps) {
 
   return (
     <section className="mb-12">
-      <div className="mb-6">
-        <h2 className="text-2xl md:text-3xl font-bold mb-2">实时动态</h2>
-        <p className="text-foreground/60">
+      <div className="mb-6 pb-4 border-b border-border">
+        <h2 className="serif text-3xl md:text-4xl font-bold mb-2 text-foreground">
+          实时动态
+        </h2>
+        <p className="text-muted leading-relaxed">
           来自该地区的最新消息和发展
         </p>
       </div>
 
-      <div className="bento-card">
-        <div className="space-y-4">
+      <div className="editorial-card">
+        <div className="divide-y divide-border">
           {updates.map((update, idx) => (
             <UpdateItem key={`${update.link}-${idx}`} update={update} />
           ))}
@@ -46,43 +50,45 @@ export function LiveUpdatesTimeline({ updates }: LiveUpdatesTimelineProps) {
 
 function UpdateItem({ update }: { update: NewsItem }) {
   return (
-    <div className="group border-b border-border last:border-0 pb-4 last:pb-0">
+    <div className="group py-5 first:pt-0 last:pb-0">
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1 min-w-0">
+          <div className="flex items-center space-x-2 mb-2">
+            <span className="text-xs font-medium text-foreground bg-foreground/5 px-2 py-1 rounded uppercase tracking-wide">
+              {update.source}
+            </span>
+            <div className="flex items-center text-xs text-muted">
+              <Clock className="h-3 w-3 mr-1" />
+              <span>{formatDate(update.pubDate)}</span>
+            </div>
+          </div>
+
           <a
             href={update.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="block mb-2 group-hover:text-accent-blue transition-colors"
+            className="block mb-2"
           >
-            <h3 className="text-base font-semibold line-clamp-2">
+            <h3 className="serif text-lg font-bold text-foreground group-hover:text-danger transition-colors line-clamp-2 leading-tight">
               {update.title}
             </h3>
           </a>
 
           {update.content && (
-            <p className="text-sm text-foreground/60 line-clamp-2 mb-2">
+            <p className="text-sm text-muted leading-relaxed line-clamp-2">
               {update.content}
             </p>
           )}
-
-          <div className="flex items-center space-x-4 text-xs text-foreground/40">
-            <div className="flex items-center space-x-1">
-              <Clock className="h-3 w-3" />
-              <span>{formatDate(update.pubDate)}</span>
-            </div>
-            <span className="text-accent-blue">{update.source}</span>
-          </div>
         </div>
 
         <a
           href={update.link}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-shrink-0 rounded-lg bg-accent-blue/10 p-2 opacity-0 group-hover:opacity-100 transition-opacity"
-          aria-label="Open article"
+          className="flex-shrink-0 rounded bg-foreground/5 p-2 opacity-0 group-hover:opacity-100 transition-opacity"
+          aria-label="打开文章"
         >
-          <ExternalLink className="h-4 w-4 text-accent-blue" />
+          <ExternalLink className="h-4 w-4 text-foreground" />
         </a>
       </div>
     </div>
