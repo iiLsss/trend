@@ -34,7 +34,15 @@ In the Vercel project settings, add the following environment variables:
 
 - **`FRED_API_KEY`**: Required for the **黄金趋势** page (`/trends/gold`). Register for a free key at [FRED API Keys](https://fred.stlouisfed.org/docs/api/api_key.html). Without this key, the app shows a data-unavailable state for gold prices (no mock numbers).
 
-See `.env.example` for a full list of placeholders.
+See `.env.example` for a full list of placeholders (copy to **`.env.local`** for local development—Next.js does not load `.env.example` at runtime).
+
+### Local development (FRED key)
+
+1. Copy `.env.example` to `.env.local` in the project root (or create `.env.local` manually).
+2. Set `FRED_API_KEY=...` with your real key from [FRED](https://fred.stlouisfed.org/docs/api/api_key.html).
+3. Restart `npm run dev`. Visiting `/trends/gold` should then load live series data.
+
+**Do not commit real keys.** `.env.local` is gitignored; keep secrets there or in Vercel env vars only.
 
 ### 4. Deploy
 
