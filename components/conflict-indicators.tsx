@@ -1,13 +1,5 @@
 import { ConflictIndicators } from "@/lib/data";
-import {
-  TrendingUp,
-  TrendingDown,
-  Minus,
-  AlertTriangle,
-  Handshake,
-  Shield,
-  Globe,
-} from "lucide-react";
+import { TrendingUp, TrendingDown, Minus } from "lucide-react";
 
 interface ConflictIndicatorsGridProps {
   indicators: ConflictIndicators;
@@ -18,112 +10,81 @@ export function ConflictIndicatorsGrid({
 }: ConflictIndicatorsGridProps) {
   const metrics = [
     {
-      label: "升级级别",
-      value: `级别 ${indicators.escalationLevel.level}/5`,
+      label: "冲突升级级别",
+      value: `${indicators.escalationLevel.level} / 5`,
       status: indicators.escalationLevel.status,
       trend: indicators.escalationLevel.trend,
-      icon: AlertTriangle,
-      colorClass: getTrendColorClass(indicators.escalationLevel.trend, true),
+      desc: "基于军事行动强度和范围的综合评估",
+      isDanger: indicators.escalationLevel.trend === "up",
     },
     {
-      label: "外交进展",
+      label: "外交进展状态",
       value: indicators.diplomaticProgress.status,
-      subValue: `${indicators.diplomaticProgress.recentEvents} 个近期事件`,
+      status: `近期事件: ${indicators.diplomaticProgress.recentEvents}`,
       trend: indicators.diplomaticProgress.trend,
-      icon: Handshake,
-      colorClass: getTrendColorClass(indicators.diplomaticProgress.trend),
+      desc: "多边谈判与国际调停的活跃程度",
+      isDanger: indicators.diplomaticProgress.trend === "down",
     },
     {
-      label: "停火可能性",
+      label: "停火达成概率",
       value: `${indicators.ceasefireLikelihood.probability}%`,
+      status: "预测模型",
       trend: indicators.ceasefireLikelihood.trend,
-      icon: Shield,
-      colorClass: getTrendColorClass(indicators.ceasefireLikelihood.trend),
+      desc: "基于当前各方立场和外部压力的评估",
+      isDanger: indicators.ceasefireLikelihood.trend === "down",
     },
     {
-      label: "地区影响",
-      value: `${indicators.regionalImpact.affectedCountries} 个国家`,
+      label: "地区外溢影响",
+      value: `${indicators.regionalImpact.affectedCountries} 国`,
       status: `严重程度: ${indicators.regionalImpact.severity}`,
       trend: indicators.regionalImpact.trend,
-      icon: Globe,
-      colorClass: getTrendColorClass(indicators.regionalImpact.trend, true),
+      desc: "受冲突直接或间接波及的周边国家数量",
+      isDanger: indicators.regionalImpact.trend === "up",
     },
   ];
 
   return (
-    <section className="mb-12">
-      <div className="mb-6 pb-4 border-b border-border">
-        <h2 className="serif text-3xl md:text-4xl font-bold mb-2 text-foreground">
-          冲突趋势指标
-        </h2>
-        <p className="text-muted leading-relaxed">
-          宏观层面追踪冲突当前状态和发展方向
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {metrics.map((metric) => (
-          <MetricCard key={metric.label} metric={metric} />
-        ))}
-      </div>
-    </section>
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-gray-200 border border-gray-200">
+      {metrics.map((metric) => (
+        <MetricCard key={metric.label} metric={metric} />
+      ))}
+    </div>
   );
 }
 
-function getTrendColorClass(trend: "up" | "down" | "stable", inverted = false): string {
-  if (inverted) {
-    return trend === "up" ? "text-danger" : trend === "down" ? "text-success" : "text-info";
-  }
-  return trend === "up" ? "text-success" : trend === "down" ? "text-danger" : "text-info";
-}
-
-interface MetricCardProps {
-  metric: {
-    label: string;
-    value: string;
-    status?: string;
-    subValue?: string;
-    trend: "up" | "down" | "stable";
-    icon: any;
-    colorClass: string;
-  };
-}
-
-function MetricCard({ metric }: MetricCardProps) {
-  const Icon = metric.icon;
-
+function MetricCard({ metric }: { metric: any }) {
   const trendIcons = {
     up: TrendingUp,
     down: TrendingDown,
     stable: Minus,
   };
 
-  const TrendIcon = trendIcons[metric.trend];
+  const TrendIcon = trendIcons[metric.trend as keyof typeof trendIcons];
 
   return (
-    <div className="editorial-card">
-      <div className="flex items-start justify-between mb-4">
-        <div className="rounded bg-foreground/5 p-2">
-          <Icon className="h-6 w-6 text-foreground" />
+    <div className="bg-white p-6 flex flex-col">
+      <div className="flex justify-between items-start mb-4">
+        <h3 className="text-xs font-bold text-gray-900 uppercase tracking-widest font-sans">
+          {metric.label}
+        </h3>
+        <div className={`flex items-center space-x-1 text-xs font-bold uppercase tracking-wider font-sans ${metric.isDanger ? 'text-red-700' : 'text-gray-500'}`}>
+          <TrendIcon className="h-3 w-3" strokeWidth={3} />
+          <span>{metric.trend === 'up' ? '上升' : metric.trend === 'down' ? '下降' : '持平'}</span>
         </div>
-        <TrendIcon className={`h-5 w-5 ${metric.colorClass}`} strokeWidth={2.5} />
       </div>
 
-      <div className="space-y-2">
-        <div className="serif text-3xl font-bold text-foreground">{metric.value}</div>
-        <div className="text-sm font-medium text-foreground uppercase tracking-wide">
-          {metric.label}
+      <div className="mt-auto">
+        <div className="flex items-baseline space-x-2 mb-1">
+          <span className="serif text-4xl font-black text-gray-900 tracking-tight">
+            {metric.value}
+          </span>
         </div>
-        {metric.status && (
-          <div className="text-xs text-muted pt-2 border-t border-border">
-            {metric.status}
-          </div>
-        )}
-        {metric.subValue && (
-          <div className="text-xs text-muted pt-2 border-t border-border">
-            {metric.subValue}
-          </div>
-        )}
+        <div className="text-sm font-medium text-gray-900 mb-2 font-sans">
+          {metric.status}
+        </div>
+        <p className="text-xs text-gray-500 leading-relaxed font-serif">
+          {metric.desc}
+        </p>
       </div>
     </div>
   );

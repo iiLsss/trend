@@ -2,22 +2,27 @@
 
 import { RefreshCw } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export function RefreshButton() {
   const router = useRouter();
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const handleRefresh = () => {
+    setIsRefreshing(true);
     router.push("?reloaddate=true");
     router.refresh();
+    setTimeout(() => setIsRefreshing(false), 1000);
   };
 
   return (
     <button
       onClick={handleRefresh}
-      className="flex items-center space-x-2 rounded border-2 border-foreground bg-white px-4 py-2 text-sm font-medium text-foreground hover:bg-foreground hover:text-background transition-colors uppercase tracking-wide"
+      disabled={isRefreshing}
+      className="flex items-center space-x-2 border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors uppercase tracking-widest disabled:opacity-50 font-sans"
     >
-      <RefreshCw className="h-4 w-4" />
-      <span>刷新</span>
+      <RefreshCw className={`h-3 w-3 ${isRefreshing ? 'animate-spin' : ''}`} />
+      <span>刷新数据</span>
     </button>
   );
 }

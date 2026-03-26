@@ -1,12 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700&family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @layer base {
   :root {
-    --color-background: #fafafa;
-    --color-foreground: #1a1a1a;
-    --color-border: #e5e5e5;
-    --color-muted: #737373;
+    --color-background: #ffffff;
+    --color-foreground: #111111;
+    --color-border: #e5e7eb;
+    --color-muted: #6b7280;
   }
 
   * {
@@ -17,63 +17,41 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Merriweather', Georgia, serif;
+    font-family: 'Playfair Display', Georgia, serif;
   }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-  
-  .editorial-card {
-    border-radius: 0.25rem;
-    border: 1px solid var(--color-border);
-    background-color: white;
-    padding: 1.5rem;
-    transition: box-shadow 0.2s ease;
-  }
-  
-  .editorial-card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  }
-  
-  .newsroom-header {
-    background-color: white;
-    border-bottom: 2px solid var(--color-foreground);
-  }
-  
   .serif {
-    font-family: 'Merriweather', Georgia, serif;
+    font-family: 'Playfair Display', Georgia, serif;
   }
-  
-  .status-escalating {
-    color: #991b1b;
-    background-color: #fee2e2;
+  .sans {
+    font-family: 'Inter', system-ui, sans-serif;
   }
-  
-  .status-stable {
-    color: #1e40af;
-    background-color: #dbeafe;
+  .border-double-bottom {
+    border-bottom: 4px double var(--color-foreground);
   }
-  
-  .status-deescalating {
-    color: #065f46;
-    background-color: #d1fae5;
+  .border-heavy-top {
+    border-top: 2px solid var(--color-foreground);
+  }
+  .border-heavy-bottom {
+    border-bottom: 2px solid var(--color-foreground);
   }
 }
 
 @theme {
-  --color-background: #fafafa;
-  --color-foreground: #1a1a1a;
-  --color-border: #e5e5e5;
-  --color-muted: #737373;
+  --color-background: #ffffff;
+  --color-foreground: #111111;
+  --color-border: #e5e7eb;
+  --color-muted: #6b7280;
   
-  --color-danger: #991b1b;
+  --color-danger: #b91c1c;
   --color-warning: #b45309;
-  --color-success: #065f46;
-  --color-info: #1e40af;
+  --color-success: #15803d;
+  --color-info: #1d4ed8;
 }

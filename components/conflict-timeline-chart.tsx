@@ -26,72 +26,84 @@ export function ConflictTimelineChart({ data }: ConflictTimelineChartProps) {
   }));
 
   return (
-    <section className="mb-12">
-      <div className="mb-6 pb-4 border-b border-border">
-        <h2 className="serif text-3xl md:text-4xl font-bold mb-2 text-foreground">
-          冲突时间线
-        </h2>
-        <p className="text-muted leading-relaxed">
-          30天关键冲突指标趋势分析
+    <div className="border border-gray-200 p-6 bg-white font-sans">
+      <div className="mb-6">
+        <h3 className="text-xs font-bold text-gray-900 uppercase tracking-widest mb-1">
+          30日趋势分析
+        </h3>
+        <p className="text-sm text-gray-500 font-serif">
+          军事行动与外交事件的频率对比
         </p>
       </div>
-
-      <div className="editorial-card">
-        <ResponsiveContainer width="100%" height={400}>
-          <LineChart data={formattedData}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e5e5e5" />
+      
+      <div className="h-[300px] w-full">
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={formattedData} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
+            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e5e5" />
             <XAxis
               dataKey="date"
-              stroke="#737373"
-              style={{ fontSize: "12px", fontFamily: "Inter, sans-serif" }}
+              stroke="#9ca3af"
+              tick={{ fontSize: 11, fill: '#6b7280' }}
+              tickLine={false}
+              axisLine={false}
+              dy={10}
             />
             <YAxis 
-              stroke="#737373" 
-              style={{ fontSize: "12px", fontFamily: "Inter, sans-serif" }} 
+              stroke="#9ca3af" 
+              tick={{ fontSize: 11, fill: '#6b7280' }}
+              tickLine={false}
+              axisLine={false}
             />
             <Tooltip
               contentStyle={{
                 backgroundColor: "white",
                 border: "1px solid #e5e5e5",
-                borderRadius: "4px",
-                color: "#1a1a1a",
-                fontFamily: "Inter, sans-serif",
+                borderRadius: "0",
+                boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+                fontSize: "12px",
+                fontFamily: "Inter, sans-serif"
               }}
+              itemStyle={{ color: '#111827', fontWeight: 500 }}
             />
             <Legend
               wrapperStyle={{ 
-                fontSize: "13px", 
-                color: "#737373",
-                fontFamily: "Inter, sans-serif",
+                fontSize: "12px", 
+                paddingTop: "20px",
               }}
-            />
-            <Line
-              type="monotone"
-              dataKey="casualties"
-              stroke="#991b1b"
-              strokeWidth={2.5}
-              dot={{ fill: "#991b1b", r: 4 }}
-              name="伤亡人数"
-            />
-            <Line
-              type="monotone"
-              dataKey="diplomaticEvents"
-              stroke="#1e40af"
-              strokeWidth={2.5}
-              dot={{ fill: "#1e40af", r: 4 }}
-              name="外交事件"
+              iconType="circle"
+              iconSize={8}
             />
             <Line
               type="monotone"
               dataKey="militaryActions"
-              stroke="#b45309"
-              strokeWidth={2.5}
-              dot={{ fill: "#b45309", r: 4 }}
               name="军事行动"
+              stroke="#b91c1c"
+              strokeWidth={2}
+              dot={false}
+              activeDot={{ r: 4, fill: "#b91c1c", strokeWidth: 0 }}
+            />
+            <Line
+              type="monotone"
+              dataKey="diplomaticEvents"
+              name="外交事件"
+              stroke="#1d4ed8"
+              strokeWidth={2}
+              dot={false}
+              activeDot={{ r: 4, fill: "#1d4ed8", strokeWidth: 0 }}
+            />
+            <Line
+              type="monotone"
+              dataKey="casualties"
+              name="伤亡估算"
+              stroke="#9ca3af"
+              strokeWidth={1}
+              strokeDasharray="4 4"
+              dot={false}
+              activeDot={{ r: 4, fill: "#9ca3af", strokeWidth: 0 }}
             />
           </LineChart>
         </ResponsiveContainer>
       </div>
-    </section>
+    </div>
   );
 }
