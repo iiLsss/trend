@@ -38,7 +38,21 @@ const parser = new Parser({
       ["content:encoded", "contentEncoded"],
     ],
   },
+  timeout: 10000, // 10 second timeout
 });
+
+/**
+ * Fetch with timeout wrapper
+ */
+async function fetchWithTimeout<T>(
+  promise: Promise<T>,
+  timeoutMs: number = 10000
+): Promise<T> {
+  const timeoutPromise = new Promise<never>((_, reject) =>
+    setTimeout(() => reject(new Error("Request timeout")), timeoutMs)
+  );
+  return Promise.race([promise, timeoutPromise]);
+}
 
 /**
  * Fetch live news updates from RSS feeds
@@ -58,9 +72,10 @@ export async function fetchLiveUpdates(): Promise<NewsItem[]> {
 
     const allNews: NewsItem[] = [];
 
-    for (const { url, source } of feeds) {
+    // Fetch feeds in parallel with timeout
+    const feedPromises = feeds.map(async ({ url, source }) => {
       try {
-        const feed = await parser.parseURL(url);
+        const feed = await fetchWithTimeout(parser.parseURL(url), 10000);
         const items = feed.items
           .filter((item) => {
             const title = item.title?.toLowerCase() || "";
@@ -88,10 +103,20 @@ export async function fetchLiveUpdates(): Promise<NewsItem[]> {
             content: item.contentSnippet || "",
           }));
 
-        allNews.push(...items);
+        return items;
       } catch (feedError) {
         console.error(`Error fetching feed from ${source}:`, feedError);
+        return [];
       }
+    });
+
+    const results = await Promise.all(feedPromises);
+    results.forEach((items) => allNews.push(...items));
+
+    // If no news fetched, return some mock data
+    if (allNews.length === 0) {
+      console.warn("No RSS feeds available, returning mock data");
+      return getMockNewsItems();
     }
 
     return allNews
@@ -102,8 +127,37 @@ export async function fetchLiveUpdates(): Promise<NewsItem[]> {
       .slice(0, 20);
   } catch (error) {
     console.error("Error fetching live updates:", error);
-    return [];
+    return getMockNewsItems();
   }
+}
+
+/**
+ * Get mock news items as fallback
+ */
+function getMockNewsItems(): NewsItem[] {
+  return [
+    {
+      title: "Middle East Diplomatic Talks Continue",
+      link: "#",
+      pubDate: new Date().toISOString(),
+      source: "Mock Data",
+      content: "Ongoing diplomatic efforts in the region...",
+    },
+    {
+      title: "Regional Updates on Conflict Situation",
+      link: "#",
+      pubDate: new Date(Date.now() - 3600000).toISOString(),
+      source: "Mock Data",
+      content: "Latest updates from the region...",
+    },
+    {
+      title: "International Community Response",
+      link: "#",
+      pubDate: new Date(Date.now() - 7200000).toISOString(),
+      source: "Mock Data",
+      content: "World leaders discuss the situation...",
+    },
+  ];
 }
 
 /**

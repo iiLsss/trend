@@ -18,9 +18,10 @@ export const revalidate = 3600;
 async function MiddleEastConflictContent({
   searchParams,
 }: {
-  searchParams: { reloaddate?: string };
+  searchParams: Promise<{ reloaddate?: string }>;
 }) {
-  const forceReload = searchParams.reloaddate === "true";
+  const params = await searchParams;
+  const forceReload = params.reloaddate === "true";
 
   const [liveUpdates, indicators, factions, timelineData] = await Promise.all([
     fetchLiveUpdates(),
@@ -71,7 +72,7 @@ async function MiddleEastConflictContent({
 export default function MiddleEastConflictPage({
   searchParams,
 }: {
-  searchParams: { reloaddate?: string };
+  searchParams: Promise<{ reloaddate?: string }>;
 }) {
   return (
     <Suspense
