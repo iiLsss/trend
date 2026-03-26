@@ -28,12 +28,13 @@ git push -u origin master
 
 ### 3. Configure Environment Variables
 
-In the Vercel project settings, add the following environment variable:
+In the Vercel project settings, add the following environment variables:
 
-- **Variable Name**: `CRON_SECRET`
-- **Value**: Generate a secure random string (e.g., run `openssl rand -base64 32` in terminal)
+- **`CRON_SECRET`**: Generate a secure random string (e.g., run `openssl rand -base64 32` in terminal). Used to authenticate the daily cron job that revalidates cached pages.
 
-This secret is used to authenticate the daily cron job that updates the data cache.
+- **`FRED_API_KEY`**: Required for the **黄金趋势** page (`/trends/gold`). Register for a free key at [FRED API Keys](https://fred.stlouisfed.org/docs/api/api_key.html). Without this key, the app shows a data-unavailable state for gold prices (no mock numbers).
+
+See `.env.example` for a full list of placeholders.
 
 ### 4. Deploy
 

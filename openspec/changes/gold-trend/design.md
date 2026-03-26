@@ -22,7 +22,7 @@ The app is a Next.js (App Router) trends site with an editorial/newsroom visual 
 
 - **Primary data: FRED daily series**  
   - **Rationale**: Free (with registration), stable, appropriate for **trend** storytelling.  
-  - **Default series** (document in code comments + README): e.g. `GOLDPMGBD228NLBM` (London Gold PM Fixing USD per troy oz)—confirm exact series ID in implementation from FRED catalog.  
+  - **Default series (confirmed)**: `GOLDPMGBD228NLBM` — London 3:00 PM Gold Price, U.S. Dollars per Troy Ounce ([FRED](https://fred.stlouisfed.org/series/GOLDPMGBD228NLBM)). Implemented as `FRED_GOLD_SERIES_ID` in `lib/gold-data.ts`.  
   - **API**: `GET .../fred/series/observations?series_id=...&api_key=...&file_type=json&sort_order=asc` with `observation_start` to limit payload.
 
 - **No mock gold prices**  

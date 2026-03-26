@@ -13,6 +13,7 @@ export async function GET(request: Request) {
     console.log("Cron job triggered at:", new Date().toISOString());
 
     revalidatePath("/trends/middle-east-conflict");
+    revalidatePath("/trends/gold");
 
     return NextResponse.json({
       success: true,

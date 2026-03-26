@@ -6,10 +6,20 @@ export default function TrendsPage() {
       id: "middle-east-conflict",
       title: "中东冲突深度追踪",
       description: "通过实时更新、阵营对比和关键指标，全面解析中东地区持续冲突的宏观走向与地缘政治影响。",
-      status: "live",
+      status: "live" as const,
       lastUpdate: "今日",
       category: "地缘政治",
-      author: "编辑部"
+      author: "编辑部",
+    },
+    {
+      id: "gold",
+      title: "黄金趋势",
+      description:
+        "基于 FRED 伦敦下午金价定盘日序列，展示中长期价格水平、涨跌与波动，并聚合宏观与金价相关资讯。",
+      status: "daily" as const,
+      lastUpdate: "日更",
+      category: "大宗商品",
+      author: "编辑部",
     },
   ];
 
@@ -33,6 +43,11 @@ export default function TrendsPage() {
                 <span className="flex items-center text-xs font-bold text-red-700 uppercase tracking-widest">
                   <span className="h-1.5 w-1.5 rounded-full bg-red-700 animate-pulse mr-1.5" />
                   实时更新
+                </span>
+              )}
+              {trend.status === "daily" && (
+                <span className="text-xs font-bold text-amber-900 uppercase tracking-widest">
+                  日频数据
                 </span>
               )}
             </div>
