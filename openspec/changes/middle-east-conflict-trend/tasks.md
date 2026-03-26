@@ -27,5 +27,5 @@
 ## 4. Deployment and Verification
 
 - [x] 4.1 Test the build process locally (`npm run build`)
-- [ ] 4.2 Deploy the application to Vercel
-- [ ] 4.3 Verify the deployed `/trends/middle-east-conflict` page is accessible, styling is correct, and charts render properly
+- [x] 4.2 Deploy the application to Vercel
+- [x] 4.3 Verify the deployed `/trends/middle-east-conflict` page is accessible, styling is correct, and charts render properly

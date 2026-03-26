@@ -10,6 +10,7 @@ import { FactionComparison } from "@/components/faction-comparison";
 import { ConflictIndicatorsGrid } from "@/components/conflict-indicators";
 import { ConflictTimelineChart } from "@/components/conflict-timeline-chart";
 import { LiveUpdatesTimeline } from "@/components/live-updates-timeline";
+import { RefreshButton } from "@/components/refresh-button";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 3600;
@@ -47,15 +48,7 @@ async function MiddleEastConflictContent({
               <span>Live</span>
             </div>
 
-            <button
-              onClick={() => {
-                window.location.href = "?reloaddate=true";
-              }}
-              className="flex items-center space-x-2 rounded-full bg-accent-blue/10 px-4 py-2 text-sm font-medium text-accent-blue border border-accent-blue/20 hover:bg-accent-blue/20 transition-colors"
-            >
-              <RefreshCw className="h-4 w-4" />
-              <span>Refresh</span>
-            </button>
+            <RefreshButton />
           </div>
         </div>
 
