@@ -11,14 +11,14 @@ export function LiveUpdatesTimeline({ updates }: LiveUpdatesTimelineProps) {
     return (
       <section className="mb-12">
         <div className="mb-6">
-          <h2 className="text-2xl md:text-3xl font-bold mb-2">Live Updates</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-2">实时动态</h2>
           <p className="text-foreground/60">
-            Recent news and developments from the region
+            来自该地区的最新消息和发展
           </p>
         </div>
 
         <div className="bento-card text-center text-foreground/60">
-          No updates available at this time. Please check back later.
+          暂无更新。请稍后再查看。
         </div>
       </section>
     );
@@ -27,9 +27,9 @@ export function LiveUpdatesTimeline({ updates }: LiveUpdatesTimelineProps) {
   return (
     <section className="mb-12">
       <div className="mb-6">
-        <h2 className="text-2xl md:text-3xl font-bold mb-2">Live Updates</h2>
+        <h2 className="text-2xl md:text-3xl font-bold mb-2">实时动态</h2>
         <p className="text-foreground/60">
-          Recent news and developments from the region
+          来自该地区的最新消息和发展
         </p>
       </div>
 

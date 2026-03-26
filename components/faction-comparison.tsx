@@ -16,9 +16,9 @@ export function FactionComparison({ factions }: FactionComparisonProps) {
   return (
     <section className="mb-12">
       <div className="mb-6">
-        <h2 className="text-2xl md:text-3xl font-bold mb-2">Faction Comparison</h2>
+        <h2 className="text-2xl md:text-3xl font-bold mb-2">对峙阵容</h2>
         <p className="text-foreground/60">
-          Overview of the primary opposing sides in the conflict
+          冲突中主要对立方概览
         </p>
       </div>
 
@@ -50,7 +50,7 @@ function FactionCard({ faction }: { faction: FactionData }) {
         <div className="flex items-center space-x-2 mb-2">
           <Target className="h-4 w-4 text-foreground/40" />
           <h4 className="text-sm font-semibold text-foreground/80">
-            Objectives
+            目标
           </h4>
         </div>
         <ul className="space-y-1.5">
@@ -67,7 +67,7 @@ function FactionCard({ faction }: { faction: FactionData }) {
         <div className="flex items-center space-x-2 mb-2">
           <Users className="h-4 w-4 text-foreground/40" />
           <h4 className="text-sm font-semibold text-foreground/80">
-            Key Figures
+            关键人物
           </h4>
         </div>
         <ul className="space-y-1.5">
@@ -81,7 +81,7 @@ function FactionCard({ faction }: { faction: FactionData }) {
 
       <div className="pt-4 border-t border-border">
         <div className="flex items-center justify-between">
-          <span className="text-xs text-foreground/40">Status</span>
+          <span className="text-xs text-foreground/40">状态</span>
           <span
             className={`text-xs font-medium text-${accentColor} bg-${accentColor}/10 px-3 py-1 rounded-full`}
           >

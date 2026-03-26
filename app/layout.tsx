@@ -7,8 +7,8 @@ import { Footer } from "@/components/footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Global Trends Tracker",
-  description: "Track and analyze global trends in real-time",
+  title: "全球趋势追踪器",
+  description: "实时追踪和分析全球趋势",
 };
 
 export default function RootLayout({

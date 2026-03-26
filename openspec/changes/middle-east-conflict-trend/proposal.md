@@ -8,10 +8,11 @@ The goal is to create a new "trend" project to track and display current global 
 - Adopt a modern, high-tech design language inspired by the Tailwind CSS official website (e.g., dark mode preference, bento-box layouts, subtle gradients, glassmorphism, and excellent typography).
 - Develop a specific trend page dedicated to the "Middle East Conflict", featuring:
   - **Faction Comparison**: A left-vs-right split layout detailing the opposing sides (e.g., Israel vs. Hamas/Hezbollah/Iran), their objectives, and current status.
-  - **Conflict Indicators Dashboard**: Key metrics (e.g., casualties, displaced persons, economic impact) displayed in a clear, bento-grid style.
+  - **Conflict Trend Indicators Dashboard**: Key metrics focusing on the macro status and direction of the conflict (e.g., Escalation Level, Diplomatic/Negotiation Status, Ceasefire Probability, Active Fronts Intensity) to answer "Is it escalating, de-escalating, or ending?" displayed in a clear, bento-grid style.
   - **Data Visualizations**: Interactive charts or maps illustrating conflict trends over time.
   - **Live Updates Timeline**: A vertical feed or discussion-style area showing recent events, diplomatic statements (e.g., negotiations, official denials), and breaking news.
 - **Real-time Data Integration**: Implement automated scraping and RSS feed parsing to fetch live conflict data and news updates without manual intervention, utilizing Next.js ISR (Incremental Static Regeneration) for performance.
+- **Localization**: All user-facing text, UI elements, and data labels on the web page MUST be displayed in **Simplified Chinese (中文)**.
 - Set up the necessary deployment configuration for Vercel.
 
 ## Capabilities

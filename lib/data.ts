@@ -9,16 +9,25 @@ export interface NewsItem {
 }
 
 export interface ConflictIndicators {
-  casualties: {
-    total: number;
+  escalationLevel: {
+    level: number; // 1-5 scale
+    status: "升级中" | "稳定" | "降级中";
     trend: "up" | "down" | "stable";
   };
-  displacedPersons: {
-    total: number;
+  diplomaticProgress: {
+    status: "进展中" | "停滞" | "恶化";
+    recentEvents: number;
     trend: "up" | "down" | "stable";
   };
-  activeFronts: number;
-  diplomaticEvents: number;
+  ceasefireLikelihood: {
+    probability: number; // 0-100%
+    trend: "up" | "down" | "stable";
+  };
+  regionalImpact: {
+    affectedCountries: number;
+    severity: "高" | "中" | "低";
+    trend: "up" | "down" | "stable";
+  };
   lastUpdated: string;
 }
 
@@ -137,47 +146,57 @@ export async function fetchLiveUpdates(): Promise<NewsItem[]> {
 function getMockNewsItems(): NewsItem[] {
   return [
     {
-      title: "Middle East Diplomatic Talks Continue",
+      title: "中东外交会谈持续进行",
       link: "#",
       pubDate: new Date().toISOString(),
-      source: "Mock Data",
-      content: "Ongoing diplomatic efforts in the region...",
+      source: "模拟数据",
+      content: "该地区正在进行外交努力...",
     },
     {
-      title: "Regional Updates on Conflict Situation",
+      title: "冲突局势地区更新",
       link: "#",
       pubDate: new Date(Date.now() - 3600000).toISOString(),
-      source: "Mock Data",
-      content: "Latest updates from the region...",
+      source: "模拟数据",
+      content: "来自该地区的最新消息...",
     },
     {
-      title: "International Community Response",
+      title: "国际社会回应",
       link: "#",
       pubDate: new Date(Date.now() - 7200000).toISOString(),
-      source: "Mock Data",
-      content: "World leaders discuss the situation...",
+      source: "模拟数据",
+      content: "世界各国领导人讨论局势...",
     },
   ];
 }
 
 /**
  * Fetch conflict indicators data
- * In a real implementation, this would scrape or call APIs
- * For now, we return mock data with realistic values
+ * Returns macro-level trend indicators focusing on the overall conflict direction
  */
 export async function fetchConflictIndicators(): Promise<ConflictIndicators> {
   try {
+    // In production, this would aggregate data from multiple sources
+    // For now, we return realistic mock data showing the macro trends
     return {
-      casualties: {
-        total: 45000,
+      escalationLevel: {
+        level: 4, // 1-5 scale, 4 = high escalation
+        status: "升级中",
         trend: "up",
       },
-      displacedPersons: {
-        total: 2100000,
+      diplomaticProgress: {
+        status: "停滞",
+        recentEvents: 3,
         trend: "stable",
       },
-      activeFronts: 3,
-      diplomaticEvents: 7,
+      ceasefireLikelihood: {
+        probability: 25, // 25% likelihood
+        trend: "down",
+      },
+      regionalImpact: {
+        affectedCountries: 6,
+        severity: "高",
+        trend: "up",
+      },
       lastUpdated: new Date().toISOString(),
     };
   } catch (error) {
@@ -193,38 +212,38 @@ export async function fetchFactionData(): Promise<FactionData[]> {
   try {
     return [
       {
-        name: "Israel",
+        name: "以色列",
         side: "left",
         description:
-          "State of Israel and its defense forces (IDF) engaged in conflict response",
+          "以色列国及其国防军（IDF）参与冲突应对行动",
         objectives: [
-          "Eliminate Hamas military capabilities",
-          "Secure border regions",
-          "Release hostages",
-          "Prevent future attacks",
+          "消除哈马斯军事能力",
+          "确保边境地区安全",
+          "解救人质",
+          "防止未来袭击",
         ],
         keyFigures: [
-          "Benjamin Netanyahu (Prime Minister)",
-          "Yoav Gallant (Defense Minister)",
+          "本雅明·内塔尼亚胡（总理）",
+          "约阿夫·加兰特（国防部长）",
         ],
-        status: "Active military operations",
+        status: "进行积极军事行动",
       },
       {
-        name: "Hamas / Hezbollah / Iran Axis",
+        name: "哈马斯/真主党/伊朗轴心",
         side: "right",
         description:
-          "Coalition of resistance groups and their regional supporters",
+          "抵抗组织联盟及其地区支持者",
         objectives: [
-          "Resist Israeli operations",
-          "Regional solidarity",
-          "Support Palestinian cause",
-          "Counter Israeli influence",
+          "抵抗以色列行动",
+          "地区团结",
+          "支持巴勒斯坦事业",
+          "对抗以色列影响力",
         ],
         keyFigures: [
-          "Yahya Sinwar (Hamas Leader)",
-          "Hassan Nasrallah (Hezbollah Leader)",
+          "叶海亚·辛瓦尔（哈马斯领导人）",
+          "哈桑·纳斯鲁拉（真主党领导人）",
         ],
-        status: "Active resistance",
+        status: "积极抵抗",
       },
     ];
   } catch (error) {

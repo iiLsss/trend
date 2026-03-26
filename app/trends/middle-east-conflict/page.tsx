@@ -36,17 +36,17 @@ async function MiddleEastConflictContent({
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
           <div>
             <h1 className="text-4xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
-              Middle East Conflict
+              中东冲突
             </h1>
             <p className="text-lg text-foreground/60">
-              Real-time tracking and analysis of the ongoing situation
+              实时追踪和分析当前局势
             </p>
           </div>
 
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2 rounded-full bg-green-500/10 px-4 py-2 text-sm font-medium text-green-400 border border-green-500/20">
               <span className="h-2 w-2 rounded-full bg-green-400 animate-pulse" />
-              <span>Live</span>
+              <span>实时</span>
             </div>
 
             <RefreshButton />
@@ -54,8 +54,8 @@ async function MiddleEastConflictContent({
         </div>
 
         <div className="text-sm text-foreground/40">
-          Last updated: {new Date(indicators.lastUpdated).toLocaleString()}
-          {forceReload && " (Force reloaded)"}
+          最后更新: {new Date(indicators.lastUpdated).toLocaleString("zh-CN")}
+          {forceReload && " (强制刷新)"}
         </div>
       </div>
 
@@ -81,7 +81,7 @@ export default function MiddleEastConflictPage({
           <div className="flex items-center justify-center min-h-[400px]">
             <div className="text-center">
               <RefreshCw className="h-8 w-8 animate-spin text-accent-blue mx-auto mb-4" />
-              <p className="text-foreground/60">Loading conflict data...</p>
+              <p className="text-foreground/60">加载冲突数据中...</p>
             </div>
           </div>
         </div>

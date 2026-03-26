@@ -8,7 +8,7 @@ export function Header() {
         <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
           <BarChart3 className="h-6 w-6 text-accent-blue" />
           <span className="text-xl font-bold bg-gradient-to-r from-accent-blue to-accent-purple bg-clip-text text-transparent">
-            Global Trends
+            全球趋势
           </span>
         </Link>
         
@@ -17,13 +17,13 @@ export function Header() {
             href="/trends"
             className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
           >
-            Trends
+            趋势
           </Link>
           <Link
             href="#"
             className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
           >
-            About
+            关于
           </Link>
         </nav>
       </div>

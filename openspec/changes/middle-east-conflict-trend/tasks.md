@@ -17,11 +17,11 @@
 
 ## 3. Middle East Conflict Page Components
 
-- [x] 3.1 Create the `/trends/middle-east-conflict` page route and hero section (Title, Live Status Badge)
-- [x] 3.2 Implement the **Faction Comparison Component**: A left/right split view showing opposing sides (e.g., Israel vs. Hamas/Hezbollah/Iran)
-- [x] 3.3 Implement the **Conflict Indicators Component**: A Tailwind-style Bento Grid displaying key metrics (casualties, active fronts, etc.)
-- [x] 3.4 Implement the **Data Visualization Component**: Integrate `recharts` to show a timeline or trend chart of the conflict
-- [x] 3.5 Implement the **Live Updates Timeline Component**: A vertical feed showing recent news, diplomatic statements (e.g., negotiations, denials), and events, styled like a modern discussion thread.
+- [x] 3.1 Create the `/trends/middle-east-conflict` page route and hero section (Title, Live Status Badge) with Chinese copy
+- [x] 3.2 Implement the **Faction Comparison Component**: A left/right split view showing opposing sides (e.g., 以色列 vs. 哈马斯/真主党/伊朗) with Chinese localization
+- [x] 3.3 Implement the **Conflict Trend Indicators Component**: A Tailwind-style Bento Grid displaying macro status metrics (升级级别, 外交状态, 停火概率, etc.) with Chinese localization
+- [x] 3.4 Implement the **Data Visualization Component**: Integrate `recharts` to show a timeline or trend chart of the conflict with Chinese labels
+- [x] 3.5 Implement the **Live Updates Timeline Component**: A vertical feed showing recent news and events, styled like a modern discussion thread, with Chinese headers and translated/localized data where possible.
 - [x] 3.6 Assemble components on the page and ensure the layout is fully responsive (stacking on mobile, side-by-side on desktop)
 
 ## 4. Deployment and Verification

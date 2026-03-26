@@ -23,7 +23,7 @@ The page SHALL display key conflict metrics using a bento-box grid layout.
 
 #### Scenario: Viewing key metrics
 - **WHEN** the user scrolls to the indicators section
-- **THEN** they see distinct, styled cards (bento grid) showing critical data points like casualties, displaced persons, or active fronts.
+- **THEN** they see distinct, styled cards (bento grid) showing macro conflict trend indicators like Escalation Status, Diplomatic Progress, Ceasefire Likelihood, and Regional Impact.
 
 ### Requirement: Data Visualizations
 The page SHALL include visual charts or graphs to represent conflict trends over time.
@@ -38,6 +38,13 @@ The page SHALL include a dynamic-looking feed or timeline area to display recent
 #### Scenario: Viewing recent updates
 - **WHEN** the user scrolls to the live updates section
 - **THEN** they see a chronologically ordered list of recent events (e.g., "Trump statement on negotiations", "Iran official denial"), styled similarly to a modern discussion thread or news feed.
+
+### Requirement: Localization (Chinese)
+The system SHALL display all user-facing content (UI labels, headers, data descriptions) in Simplified Chinese.
+
+#### Scenario: Viewing the page content
+- **WHEN** the user views any section of the page
+- **THEN** all text, including "对峙阵容" (Faction Comparison), "冲突趋势指标" (Conflict Trend Indicators), and "实时动态" (Live Updates), is displayed in Chinese.
 
 ### Requirement: Real-Time Data Integration
 The system SHALL fetch live data from external sources to populate the page content automatically.

@@ -1,13 +1,12 @@
 import { ConflictIndicators } from "@/lib/data";
-import { formatNumber } from "@/lib/utils";
 import {
   TrendingUp,
   TrendingDown,
   Minus,
-  Users,
-  Activity,
-  MapPin,
-  MessageSquare,
+  AlertTriangle,
+  Handshake,
+  Shield,
+  Globe,
 } from "lucide-react";
 
 interface ConflictIndicatorsGridProps {
@@ -19,32 +18,35 @@ export function ConflictIndicatorsGrid({
 }: ConflictIndicatorsGridProps) {
   const metrics = [
     {
-      label: "Casualties",
-      value: formatNumber(indicators.casualties.total),
-      trend: indicators.casualties.trend,
-      icon: Activity,
+      label: "升级级别",
+      value: `级别 ${indicators.escalationLevel.level}/5`,
+      status: indicators.escalationLevel.status,
+      trend: indicators.escalationLevel.trend,
+      icon: AlertTriangle,
       color: "red",
     },
     {
-      label: "Displaced Persons",
-      value: formatNumber(indicators.displacedPersons.total),
-      trend: indicators.displacedPersons.trend,
-      icon: Users,
-      color: "orange",
-    },
-    {
-      label: "Active Fronts",
-      value: indicators.activeFronts.toString(),
-      trend: "stable" as const,
-      icon: MapPin,
+      label: "外交进展",
+      value: indicators.diplomaticProgress.status,
+      subValue: `${indicators.diplomaticProgress.recentEvents} 个近期事件`,
+      trend: indicators.diplomaticProgress.trend,
+      icon: Handshake,
       color: "blue",
     },
     {
-      label: "Diplomatic Events",
-      value: indicators.diplomaticEvents.toString(),
-      trend: "stable" as const,
-      icon: MessageSquare,
-      color: "purple",
+      label: "停火可能性",
+      value: `${indicators.ceasefireLikelihood.probability}%`,
+      trend: indicators.ceasefireLikelihood.trend,
+      icon: Shield,
+      color: "green",
+    },
+    {
+      label: "地区影响",
+      value: `${indicators.regionalImpact.affectedCountries} 个国家`,
+      status: `严重程度: ${indicators.regionalImpact.severity}`,
+      trend: indicators.regionalImpact.trend,
+      icon: Globe,
+      color: "orange",
     },
   ];
 
@@ -52,10 +54,10 @@ export function ConflictIndicatorsGrid({
     <section className="mb-12">
       <div className="mb-6">
         <h2 className="text-2xl md:text-3xl font-bold mb-2">
-          Conflict Indicators
+          冲突趋势指标
         </h2>
         <p className="text-foreground/60">
-          Key metrics tracking the current situation
+          宏观层面追踪冲突当前状态和发展方向
         </p>
       </div>
 
@@ -72,6 +74,8 @@ interface MetricCardProps {
   metric: {
     label: string;
     value: string;
+    status?: string;
+    subValue?: string;
     trend: "up" | "down" | "stable";
     icon: any;
     color: string;
@@ -108,8 +112,14 @@ function MetricCard({ metric }: MetricCardProps) {
         </div>
 
         <div className="space-y-1">
-          <div className="text-3xl font-bold">{metric.value}</div>
+          <div className="text-2xl font-bold">{metric.value}</div>
           <div className="text-sm text-foreground/60">{metric.label}</div>
+          {metric.status && (
+            <div className="text-xs text-foreground/40 mt-1">{metric.status}</div>
+          )}
+          {metric.subValue && (
+            <div className="text-xs text-foreground/40 mt-1">{metric.subValue}</div>
+          )}
         </div>
       </div>
     </div>

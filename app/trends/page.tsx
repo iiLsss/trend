@@ -5,11 +5,11 @@ export default function TrendsPage() {
   const trends = [
     {
       id: "middle-east-conflict",
-      title: "Middle East Conflict",
-      description: "Track the ongoing conflict in the Middle East with real-time updates, faction comparisons, and key indicators.",
+      title: "中东冲突",
+      description: "通过实时更新、阵营对比和关键指标追踪中东地区持续冲突",
       icon: MapPin,
       status: "live",
-      lastUpdate: "Today",
+      lastUpdate: "今天",
     },
   ];
 
@@ -18,10 +18,10 @@ export default function TrendsPage() {
       <div className="mb-12">
         <div className="flex items-center space-x-3 mb-4">
           <TrendingUp className="h-8 w-8 text-accent-blue" />
-          <h1 className="text-4xl font-bold">Global Trends</h1>
+          <h1 className="text-4xl font-bold">全球趋势</h1>
         </div>
         <p className="text-lg text-foreground/60 max-w-2xl">
-          Explore current global trends with real-time data, visualizations, and insights.
+          探索当前全球趋势，包含实时数据、可视化和深度洞察
         </p>
       </div>
 
@@ -38,7 +38,7 @@ export default function TrendsPage() {
                 {trend.status === "live" && (
                   <span className="flex items-center space-x-2 rounded-full bg-green-500/10 px-3 py-1 text-xs font-medium text-green-400 border border-green-500/20">
                     <span className="h-2 w-2 rounded-full bg-green-400 animate-pulse" />
-                    <span>Live</span>
+                    <span>实时</span>
                   </span>
                 )}
               </div>
@@ -56,7 +56,7 @@ export default function TrendsPage() {
 
               <div className="flex items-center text-xs text-foreground/40">
                 <Globe className="h-3 w-3 mr-1" />
-                <span>Updated {trend.lastUpdate}</span>
+                <span>更新于 {trend.lastUpdate}</span>
               </div>
             </Link>
           );
