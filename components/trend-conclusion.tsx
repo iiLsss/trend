@@ -20,15 +20,11 @@ export function TrendConclusion({ indicators }: TrendConclusionProps) {
 
   return (
     <TooltipProvider delayDuration={300}>
-      <div className="mb-12 grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="mb-12 grid grid-cols-1 md:grid-cols-2 gap-px bg-gray-200 border border-gray-200">
         {/* Trend Card */}
-        <div className={`p-6 border-2 flex flex-col justify-center ${
-          isUpward ? "border-red-700 bg-red-50" : 
-          isDownward ? "border-green-700 bg-green-50" : 
-          "border-gray-400 bg-gray-50"
-        }`}>
-          <div className="flex items-center space-x-1.5 mb-2">
-            <span className="text-xs font-bold uppercase tracking-widest font-sans text-gray-600">当前趋势</span>
+        <div className="bg-white p-6 flex flex-col justify-center">
+          <div className="flex items-center space-x-1.5 mb-4">
+            <span className="text-xs font-bold uppercase tracking-widest font-sans text-gray-900">当前趋势</span>
             <Tooltip>
               <TooltipTrigger asChild>
                 <button className="text-gray-400 hover:text-gray-600 transition-colors focus:outline-none">
@@ -45,27 +41,23 @@ export function TrendConclusion({ indicators }: TrendConclusionProps) {
             {isUpward && <TrendingUp className="h-8 w-8 text-red-700" strokeWidth={2.5} />}
             {isDownward && <TrendingDown className="h-8 w-8 text-green-700" strokeWidth={2.5} />}
             {!isUpward && !isDownward && <Minus className="h-8 w-8 text-gray-500" strokeWidth={2.5} />}
-            <span className={`text-3xl font-black tracking-tight ${
+            <span className={`text-4xl font-black tracking-tight serif ${
               isUpward ? "text-red-700" : 
               isDownward ? "text-green-700" : 
-              "text-gray-700"
+              "text-gray-900"
             }`}>
               {indicators.trendDirection}
             </span>
           </div>
-          <p className="text-sm mt-3 font-serif text-gray-600">
+          <p className="text-sm mt-3 font-serif text-gray-500">
             基于20日均线与60日均线交叉分析
           </p>
         </div>
 
         {/* Risk Card */}
-        <div className={`p-6 border-2 flex flex-col justify-center ${
-          isHighRisk ? "border-orange-600 bg-orange-50" : 
-          isMediumRisk ? "border-blue-600 bg-blue-50" : 
-          "border-emerald-600 bg-emerald-50"
-        }`}>
-          <div className="flex items-center space-x-1.5 mb-2">
-            <span className="text-xs font-bold uppercase tracking-widest font-sans text-gray-600">市场风险</span>
+        <div className="bg-white p-6 flex flex-col justify-center">
+          <div className="flex items-center space-x-1.5 mb-4">
+            <span className="text-xs font-bold uppercase tracking-widest font-sans text-gray-900">市场风险</span>
             <Tooltip>
               <TooltipTrigger asChild>
                 <button className="text-gray-400 hover:text-gray-600 transition-colors focus:outline-none">
@@ -82,7 +74,7 @@ export function TrendConclusion({ indicators }: TrendConclusionProps) {
             {isHighRisk && <AlertTriangle className="h-8 w-8 text-orange-600" strokeWidth={2.5} />}
             {isMediumRisk && <Activity className="h-8 w-8 text-blue-600" strokeWidth={2.5} />}
             {!isHighRisk && !isMediumRisk && <ShieldCheck className="h-8 w-8 text-emerald-600" strokeWidth={2.5} />}
-            <span className={`text-3xl font-black tracking-tight ${
+            <span className={`text-4xl font-black tracking-tight serif ${
               isHighRisk ? "text-orange-600" : 
               isMediumRisk ? "text-blue-600" : 
               "text-emerald-600"
@@ -90,7 +82,7 @@ export function TrendConclusion({ indicators }: TrendConclusionProps) {
               {indicators.riskLevel}
             </span>
           </div>
-          <p className="text-sm mt-3 font-serif text-gray-600">
+          <p className="text-sm mt-3 font-serif text-gray-500">
             基于 CBOE 黄金 ETF 波动率指数 (GVZ)
             {indicators.latestVolatilityIndex && `：${indicators.latestVolatilityIndex.toFixed(2)}`}
           </p>

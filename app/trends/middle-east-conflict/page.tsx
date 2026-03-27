@@ -1,5 +1,6 @@
 import { Suspense } from "react";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, ArrowLeft } from "lucide-react";
+import Link from "next/link";
 import {
   fetchLiveUpdates,
   fetchConflictIndicators,
@@ -32,6 +33,16 @@ async function MiddleEastConflictContent({
 
   return (
     <div className="py-6">
+      <div className="mb-6">
+        <Link 
+          href="/trends" 
+          className="inline-flex items-center text-sm font-bold text-gray-500 hover:text-gray-900 transition-colors uppercase tracking-wider font-sans"
+        >
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          返回专题追踪
+        </Link>
+      </div>
+
       {/* Article Header */}
       <header className="mb-12 pb-8 border-heavy-bottom">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-6">

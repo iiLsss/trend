@@ -34,8 +34,8 @@ export default function TrendsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {trends.map((trend) => (
-          <article key={trend.id} className="group flex flex-col h-full font-sans">
-            <div className="mb-3 flex items-center justify-between">
+          <article key={trend.id} className="group flex flex-col h-full font-sans border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow bg-white">
+            <div className="mb-4 flex items-center justify-between">
               <span className="text-xs font-bold text-gray-900 uppercase tracking-widest border-b border-gray-900 pb-1">
                 {trend.category}
               </span>
