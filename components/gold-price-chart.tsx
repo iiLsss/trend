@@ -28,14 +28,14 @@ export function GoldPriceChart({ data }: GoldPriceChartProps) {
     <div className="border border-gray-200 p-6 bg-white font-sans">
       <div className="mb-6">
         <h3 className="text-xs font-bold text-gray-900 uppercase tracking-widest mb-1">
-          伦敦下午定盘价走势
+          纳斯达克黄金价格指数走势
         </h3>
         <p className="text-sm text-gray-500 font-serif">
-          美元/盎司（FRED: GOLDPMGBD228NLBM），日频
+          Credit Suisse NASDAQ Gold FLOWS103 Price Index (FRED: NASDAQQGLDI), 日频
         </p>
       </div>
 
-      <div className="h-[320px] w-full">
+      <div className="h-[320px] w-full min-h-[320px]">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             data={formatted}
@@ -71,17 +71,17 @@ export function GoldPriceChart({ data }: GoldPriceChartProps) {
               }}
               formatter={(value) => {
                 const n = typeof value === "number" ? value : Number(value);
-                if (!Number.isFinite(n)) return ["—", "价格"];
+                if (!Number.isFinite(n)) return ["—", "指数"];
                 return [
-                  `${n.toLocaleString("zh-CN", { maximumFractionDigits: 2 })} 美元/盎司`,
-                  "价格",
+                  `${n.toLocaleString("zh-CN", { maximumFractionDigits: 2 })}`,
+                  "指数",
                 ];
               }}
             />
             <Line
               type="monotone"
               dataKey="value"
-              name="价格"
+              name="指数"
               stroke="#b45309"
               strokeWidth={2}
               dot={false}

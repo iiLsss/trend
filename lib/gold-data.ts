@@ -1,7 +1,8 @@
 /**
  * Gold trend data from FRED (St. Louis Fed).
- * Series: GOLDPMGBD228NLBM — London 3:00 PM Gold Price, USD per Troy Ounce.
- * https://fred.stlouisfed.org/series/GOLDPMGBD228NLBM
+ * Series: IQ12260 — Export Price Index: Nonmonetary Gold (Monthly, Index Dec 2024=100)
+ * Note: The original daily series GOLDPMGBD228NLBM (London PM Gold Fixing) has been discontinued by FRED.
+ * https://fred.stlouisfed.org/series/IQ12260
  *
  * No mock or synthetic prices: on missing key or API failure, callers get success: false.
  */
@@ -9,23 +10,35 @@
 import Parser from "rss-parser";
 import type { NewsItem } from "@/lib/data";
 
-export const FRED_GOLD_SERIES_ID = "GOLDPMGBD228NLBM" as const;
+export const FRED_GOLD_SERIES_ID = "NASDAQQGLDI" as const;
+export const FRED_GOLD_VOLATILITY_SERIES_ID = "GVZCLS" as const;
 
 export interface GoldObservation {
   date: string;
   value: number;
 }
 
+export type TrendDirection = "强势上行" | "弱势下行" | "震荡/转折";
+export type RiskLevel = "低风险 (平稳)" | "中等风险 (活跃)" | "高风险 (剧烈波动)";
+
 export interface GoldIndicators {
-  /** Latest observed USD per troy ounce */
+  /** Latest observed index value */
   latestPriceUsd: number;
   latestDate: string;
-  /** % change vs observation ~30 trading days earlier (by index), null if insufficient history */
+  /** % change vs observation ~30 obs earlier, null if insufficient history */
   change30ObsPct: number | null;
-  /** % change vs observation ~90 trading days earlier */
+  /** % change vs observation ~90 obs earlier */
   change90ObsPct: number | null;
-  /** Sample std dev of daily simple returns (last 60 returns if available), as decimal e.g. 0.012 = 1.2% */
+  /** Sample std dev of returns (last 60 if available), as decimal e.g. 0.012 = 1.2% */
   dailyReturnVolatility: number | null;
+  
+  // New indicators for revamp
+  sma20: number | null;
+  sma60: number | null;
+  trendDirection: TrendDirection;
+  latestVolatilityIndex: number | null;
+  riskLevel: RiskLevel;
+  
   seriesId: string;
   lastUpdated: string;
 }
@@ -41,12 +54,45 @@ const parser = new Parser({ timeout: 10000 });
 
 async function fetchWithTimeout<T>(
   promise: Promise<T>,
-  timeoutMs: number = 15000
+  timeoutMs: number = 30000
 ): Promise<T> {
   const timeoutPromise = new Promise<never>((_, reject) =>
     setTimeout(() => reject(new Error("Request timeout")), timeoutMs)
   );
   return Promise.race([promise, timeoutPromise]);
+}
+
+import { exec } from "child_process";
+import { promisify } from "util";
+
+const execAsync = promisify(exec);
+
+/**
+ * Fetch URL using system curl (workaround for Node.js fetch timeout issues)
+ */
+async function fetchUrl(url: string, timeoutMs: number = 30000): Promise<Response> {
+  try {
+    const { stdout, stderr } = await execAsync(
+      `curl -s -m ${Math.floor(timeoutMs / 1000)} "${url}"`,
+      { maxBuffer: 10 * 1024 * 1024 }
+    );
+    
+    if (stderr) {
+      console.warn('[FRED] curl stderr:', stderr);
+    }
+    
+    const data = JSON.parse(stdout);
+    
+    // Create a Response-like object
+    return {
+      ok: !data.error_code,
+      status: data.error_code ? 400 : 200,
+      json: async () => data,
+      text: async () => stdout,
+    } as Response;
+  } catch (error) {
+    throw new Error(`Request failed: ${(error as Error).message}`);
+  }
 }
 
 function parseObservations(
@@ -64,7 +110,8 @@ function parseObservations(
 
 function computeIndicators(
   observations: GoldObservation[],
-  seriesId: string
+  seriesId: string,
+  volatilityObservations?: GoldObservation[]
 ): GoldIndicators | null {
   if (observations.length === 0) return null;
 
@@ -107,19 +154,60 @@ function computeIndicators(
     dailyReturnVolatility = Math.sqrt(variance);
   }
 
+  // Calculate SMAs
+  let sma20: number | null = null;
+  if (observations.length >= 20) {
+    const window20 = observations.slice(-20);
+    sma20 = window20.reduce((sum, obs) => sum + obs.value, 0) / 20;
+  }
+
+  let sma60: number | null = null;
+  if (observations.length >= 60) {
+    const window60 = observations.slice(-60);
+    sma60 = window60.reduce((sum, obs) => sum + obs.value, 0) / 60;
+  }
+
+  // Determine Trend
+  let trendDirection: TrendDirection = "震荡/转折";
+  if (sma20 !== null && sma60 !== null) {
+    if (latestPriceUsd > sma20 && sma20 > sma60) {
+      trendDirection = "强势上行";
+    } else if (latestPriceUsd < sma20 && sma20 < sma60) {
+      trendDirection = "弱势下行";
+    }
+  }
+
+  // Determine Risk Level from Volatility Series
+  let latestVolatilityIndex: number | null = null;
+  let riskLevel: RiskLevel = "低风险 (平稳)";
+  
+  if (volatilityObservations && volatilityObservations.length > 0) {
+    latestVolatilityIndex = volatilityObservations[volatilityObservations.length - 1].value;
+    if (latestVolatilityIndex >= 25) {
+      riskLevel = "高风险 (剧烈波动)";
+    } else if (latestVolatilityIndex >= 15) {
+      riskLevel = "中等风险 (活跃)";
+    }
+  }
+
   return {
     latestPriceUsd,
     latestDate,
     change30ObsPct,
     change90ObsPct,
     dailyReturnVolatility,
+    sma20,
+    sma60,
+    trendDirection,
+    latestVolatilityIndex,
+    riskLevel,
     seriesId,
     lastUpdated: new Date().toISOString(),
   };
 }
 
 /**
- * Fetch daily gold observations from FRED. Requires FRED_API_KEY in server environment.
+ * Fetch daily gold observations and volatility from FRED. Requires FRED_API_KEY in server environment.
  */
 export async function fetchGoldSeriesFromFred(): Promise<GoldSeriesResult> {
   const apiKey = process.env.FRED_API_KEY?.trim();
@@ -136,32 +224,53 @@ export async function fetchGoldSeriesFromFred(): Promise<GoldSeriesResult> {
   start.setFullYear(start.getFullYear() - 2);
   const observationStart = start.toISOString().slice(0, 10);
 
-  const url = new URL("https://api.stlouisfed.org/fred/series/observations");
-  url.searchParams.set("series_id", FRED_GOLD_SERIES_ID);
-  url.searchParams.set("api_key", apiKey);
-  url.searchParams.set("file_type", "json");
-  url.searchParams.set("sort_order", "asc");
-  url.searchParams.set("observation_start", observationStart);
+  const priceUrl = new URL("https://api.stlouisfed.org/fred/series/observations");
+  priceUrl.searchParams.set("series_id", FRED_GOLD_SERIES_ID);
+  priceUrl.searchParams.set("api_key", apiKey);
+  priceUrl.searchParams.set("file_type", "json");
+  priceUrl.searchParams.set("sort_order", "asc");
+  priceUrl.searchParams.set("observation_start", observationStart);
 
+  const volUrl = new URL("https://api.stlouisfed.org/fred/series/observations");
+  volUrl.searchParams.set("series_id", FRED_GOLD_VOLATILITY_SERIES_ID);
+  volUrl.searchParams.set("api_key", apiKey);
+  volUrl.searchParams.set("file_type", "json");
+  volUrl.searchParams.set("sort_order", "asc");
+  volUrl.searchParams.set("observation_start", observationStart);
+
+  const startTime = Date.now();
   try {
-    const res = await fetchWithTimeout(fetch(url.toString()), 20000);
-    if (!res.ok) {
-      const text = await res.text().catch(() => "");
-      console.error("FRED API error:", res.status, text.slice(0, 200));
+    console.log(`[FRED] Requesting Price: ${priceUrl.origin}${priceUrl.pathname}`);
+    console.log(`[FRED] Requesting Volatility: ${volUrl.origin}${volUrl.pathname}`);
+    
+    // Fetch both in parallel
+    const [priceRes, volRes] = await Promise.all([
+      fetchUrl(priceUrl.toString(), 30000),
+      fetchUrl(volUrl.toString(), 30000)
+    ]);
+    
+    const elapsed = Date.now() - startTime;
+    console.log(`[FRED] Responses received in ${elapsed}ms, status: Price=${priceRes.status}, Vol=${volRes.status}`);
+    
+    if (!priceRes.ok) {
+      const text = await priceRes.text().catch(() => "");
+      console.error("FRED API error (Price):", priceRes.status, text.slice(0, 200));
       return {
         success: false,
-        error: "fred_http",
+        error: `fred_http_${priceRes.status}`,
         observations: [],
         indicators: null,
       };
     }
-    const json = (await res.json()) as {
+    
+    const priceJson = (await priceRes.json()) as {
       observations?: Array<{ date: string; value: string }>;
       error_code?: number;
       error_message?: string;
     };
-    if (json.error_message) {
-      console.error("FRED API:", json.error_message);
+    
+    if (priceJson.error_message) {
+      console.error("FRED API (Price):", priceJson.error_message);
       return {
         success: false,
         error: "fred_api",
@@ -169,8 +278,20 @@ export async function fetchGoldSeriesFromFred(): Promise<GoldSeriesResult> {
         indicators: null,
       };
     }
-    const observations = parseObservations(json.observations ?? []);
-    const indicators = computeIndicators(observations, FRED_GOLD_SERIES_ID);
+
+    let volObservations: GoldObservation[] = [];
+    if (volRes.ok) {
+      const volJson = (await volRes.json()) as {
+        observations?: Array<{ date: string; value: string }>;
+      };
+      volObservations = parseObservations(volJson.observations ?? []);
+    } else {
+      console.warn("FRED API error (Volatility):", volRes.status);
+      // We continue even if volatility fails, just won't have risk metrics
+    }
+
+    const observations = parseObservations(priceJson.observations ?? []);
+    const indicators = computeIndicators(observations, FRED_GOLD_SERIES_ID, volObservations);
 
     return {
       success: observations.length > 0,

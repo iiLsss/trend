@@ -19,11 +19,15 @@ The page SHALL include a visual layout comparing the primary opposing factions i
 - **THEN** they see a clear left-vs-right (or side-by-side) layout detailing the opposing sides, their current status, and key figures or objectives.
 
 ### Requirement: Conflict Indicators Dashboard
-The page SHALL display key conflict metrics using a bento-box grid layout.
+The page SHALL display key conflict metrics using a bento-box grid layout. Complex or ambiguous indicators SHALL include interactive tooltips providing plain-language explanations of what the metric means and how to interpret it.
 
 #### Scenario: Viewing key metrics
 - **WHEN** the user scrolls to the indicators section
 - **THEN** they see distinct, styled cards (bento grid) showing macro conflict trend indicators like Escalation Status, Diplomatic Progress, Ceasefire Likelihood, and Regional Impact.
+
+#### Scenario: Indicator tooltips are accessible
+- **WHEN** the user interacts with the help icon next to a complex indicator
+- **THEN** a tooltip appears explaining the indicator's meaning in simple terms.
 
 ### Requirement: Data Visualizations
 The page SHALL include visual charts or graphs to represent conflict trends over time.

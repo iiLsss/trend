@@ -10,6 +10,7 @@ import { GoldPriceChart } from "@/components/gold-price-chart";
 import { GoldDataUnavailable } from "@/components/gold-data-unavailable";
 import { LiveUpdatesTimeline } from "@/components/live-updates-timeline";
 import { RefreshButton } from "@/components/refresh-button";
+import { TrendConclusion } from "@/components/trend-conclusion";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 3600;
@@ -50,7 +51,7 @@ async function GoldTrendContent({
               黄金趋势
             </h1>
             <p className="serif text-xl text-gray-600 leading-relaxed">
-              基于圣路易斯联储（FRED）伦敦下午金价定盘日序列，观察中长期价格方向与波动，非实时盘口。
+              基于圣路易斯联储（FRED）纳斯达克黄金价格指数与 CBOE 黄金波动率指数，观察中长期价格方向与市场风险，非实时盘口。
             </p>
           </div>
         </div>
@@ -76,6 +77,13 @@ async function GoldTrendContent({
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
         <div className="lg:col-span-8 space-y-16">
+          
+          {seriesResult.success && seriesResult.indicators && (
+            <section>
+              <TrendConclusion indicators={seriesResult.indicators} />
+            </section>
+          )}
+
           <section>
             <h2 className="serif text-2xl font-bold text-gray-900 mb-6 border-b border-gray-200 pb-2">
               价格与趋势指标
