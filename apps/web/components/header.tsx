@@ -16,6 +16,7 @@ export function Header() {
           <div>{today}</div>
           <div className="flex space-x-6">
             <Link href="/trends" className="hover:text-gray-900 transition-colors">趋势</Link>
+            <Link href="/trends/ai-tools" className="hover:text-gray-900 transition-colors">AI 工具</Link>
             <Link href="#" className="hover:text-gray-900 transition-colors">关于</Link>
           </div>
         </div>

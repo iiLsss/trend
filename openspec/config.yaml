@@ -18,3 +18,106 @@ schema: spec-driven
 #       - Always include a "Non-goals" section
 #     tasks:
 #       - Break tasks into chunks of max 2 hours
+
+
+context: |
+  # Baseline Context (Current Project)
+  This repository is a Turborepo monorepo for a Global Trends product:
+  - `apps/web`: Next.js frontend (App Router)
+  - `apps/agent`: Python AI Trend pipeline (observe -> denoise -> unbundle -> re-bundle -> briefing)
+  - `packages/db-schema`: shared SQL schema + generated TypeScript DB types
+
+  # Product Scope
+  The product tracks trend verticals:
+  - Middle East conflict trend
+  - Gold trend
+  - AI tools trend (core new capability)
+
+  AI tools trend is data-driven by Supabase tables populated by the Python agent.
+  Frontend should read persisted data; do not invent synthetic metrics.
+
+  # Tech Stack
+  - Monorepo: Turborepo + npm workspaces
+  - Frontend: Next.js 16.2.1, React 19, TypeScript, Tailwind CSS v4
+  - Rendering: App Router server components + server actions where appropriate
+  - Data/UI libs: Supabase JS, Recharts, Lucide, Streamdown (Markdown rendering)
+  - Agent: Python, APScheduler, OpenRouter API (OpenAI-compatible), Pydantic/instructor
+  - Database: Supabase Postgres (+ pgvector when embeddings enabled)
+  - Runtime: Node.js v24.10.0 (`.nvmrc`)
+
+  # Architecture Boundaries
+  - Web and agent are decoupled deployment units.
+  - `apps/web` does not execute the Python pipeline; it only reads DB outputs and writes user feedback.
+  - Agent owns ingestion, denoising, clustering/re-bundling analysis, and daily briefing generation.
+  - Schema contract lives in `packages/db-schema/schema.sql`; keep web/agent aligned with this contract.
+
+  # Current Key Routes/Features (`apps/web`)
+  - `/trends/middle-east-conflict`: conflict indicators + timeline + live updates
+  - `/trends/gold`: FRED-backed series + unavailable fallback when key/data missing
+  - `/trends/ai-tools`: AI products, re-bundling opportunities, briefing markdown, user feedback
+  - API routes: `/api/cron`, `/api/revalidate`
+
+  # Environment & Secrets
+  Web (`apps/web`) commonly uses:
+  - `NEXT_PUBLIC_SUPABASE_URL`
+  - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+  - `FRED_API_KEY`
+  - `CRON_SECRET`
+
+  Agent (`apps/agent`) commonly uses:
+  - `OPENROUTER_API_KEY`
+  - `LLM_MODEL` (default: `google/gemini-2.0-flash-lite-001`)
+  - `SUPABASE_URL`
+  - `SUPABASE_SERVICE_ROLE_KEY`
+  - Optional embedding-related vars and CLI flags (`--skip-embedding`)
+
+  Never place service-role credentials in public frontend runtime variables.
+
+  # Deployment Baseline
+  - Vercel project root directory for web is `apps/web`.
+  - Agent is deployed separately (container/worker/cron host).
+  - Cron in web is for cache/revalidate triggers, not full AI pipeline execution.
+
+  # Data and Quality Principles
+  - No fabricated numbers, fake timelines, or synthetic "example" KPI output in production pages.
+  - On upstream/API/key failures, show explicit unavailable/degraded state.
+  - Prefer deterministic, typed interfaces across web-agent-db boundaries.
+  - Preserve Chinese user-facing output style for briefings where configured.
+
+  # OpenSpec Artifact Expectations (for model output)
+  When generating proposal/design/spec/tasks:
+  - Assume monorepo paths (`apps/web`, `apps/agent`, `packages/db-schema`), not legacy root-level Next.js paths.
+  - Distinguish web concerns vs agent concerns vs schema concerns in scope and tasks.
+  - Include security and ops implications for any change touching secrets, cron, or external APIs.
+  - Keep tasks granular and testable; include validation steps (local and deployment-level).
+  - Reference existing implemented capabilities before proposing net-new architecture.
+
+rules:
+  proposal:
+    - Keep under 400 words; start with one-sentence problem statement.
+    - Must include sections: Scope, Non-goals, Risks, Rollout/Validation.
+    - Must classify work by layer: web (`apps/web`), agent (`apps/agent`), schema (`packages/db-schema`).
+    - Do not propose legacy root-level Next.js paths (`app/`, `components/`, `lib/` at repo root).
+    - Do not include fake data strategy; specify real source or explicit unavailable fallback.
+
+  design:
+    - Keep under 800 words unless explicitly requested otherwise.
+    - Must include: architecture diagram (ASCII allowed), data flow, error handling, security considerations, operations/deployment notes.
+    - Must document API/database contracts touched and backward compatibility impact.
+    - For env changes, list exact variable names and whether they are public (`NEXT_PUBLIC_*`) or secret.
+    - Prefer incremental changes over large rewrites; include at least one alternative and trade-off.
+
+  specs:
+    - Use RFC-2119 language for normative statements (MUST/SHOULD/MAY).
+    - Every requirement must be testable and mapped to a concrete path/surface in monorepo.
+    - Separate requirements by capability and layer (web vs agent vs schema).
+    - For data freshness/reliability behavior, define degraded-state behavior explicitly.
+    - Avoid implementation details unless needed to remove ambiguity.
+
+  tasks:
+    - Keep each task small (target <= 2 hours of focused work).
+    - Group tasks by layer: web, agent, schema, ops.
+    - Every task must include: objective, file/path target, verification command/check, expected outcome.
+    - Include explicit security checks when touching secrets, auth, DB writes, or external APIs.
+    - Include deployment verification tasks for Vercel (`apps/web`) and agent runtime where relevant.
+    - Mark manual/external tasks clearly (e.g., Supabase console, Vercel dashboard) with owner hint.

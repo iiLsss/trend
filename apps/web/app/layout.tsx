@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "streamdown/styles.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 

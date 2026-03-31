@@ -1,76 +1,31 @@
-# Global Trends Tracker
+# 全球趋势追踪器 (Global Trends Tracker)
 
-A Next.js application for tracking and analyzing global trends in real-time.
+Turborepo monorepo for tracking and analyzing global trends with real-time data.
 
-## Features
+## Structure
 
-- Modern, dark-themed UI inspired by Tailwind CSS design patterns
-- Real-time data fetching via RSS feeds and web scraping
-- Interactive data visualizations with Recharts
-- Responsive design optimized for all devices
-- Deployed on Vercel with automatic daily updates
-
-## Tech Stack
-
-- **Framework**: Next.js 16 (App Router)
-- **Styling**: Tailwind CSS
-- **UI Components**: Lucide React (icons)
-- **Data Visualization**: Recharts
-- **Data Fetching**: RSS Parser, Cheerio
-- **Deployment**: Vercel
+```
+├── apps/
+│   ├── web/              # Next.js frontend (Vercel)
+│   └── agent/            # Python AI Trend Agent (Docker)
+├── packages/
+│   └── db-schema/        # Shared database schema & TypeScript types
+└── openspec/             # Change specifications
+```
 
 ## Getting Started
 
-### Prerequisites
-
-- Node.js v24.10.0
-- npm or yarn
-
-### Installation
-
 ```bash
-# Switch to the correct Node.js version
-nvm use v24.10.0
-
-# Install dependencies
-npm install
-
-# Run the development server
-npm run dev
+npm install        # Install all workspace dependencies
+npm run dev        # Start the Next.js dev server (via Turborepo)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the application.
+## Apps
 
-## Available Scripts
+- **`apps/web`** — Next.js 16, React 19, Tailwind CSS v4. Deployed on Vercel.
+- **`apps/agent`** — Python AI agent for scraping, denoising, and analysis. Deployed via Docker.  
+  Low-cost run: `cd apps/agent && source .venv/bin/activate && export $(cat .env | xargs) && python3 -m src.main --resume-from-db --limit 30 --skip-embedding`
 
-- `npm run dev` - Start the development server with Turbopack
-- `npm run build` - Build the application for production
-- `npm start` - Start the production server
-- `npm run lint` - Run ESLint
+## Packages
 
-## Deployment
-
-This project is optimized for deployment on Vercel:
-
-1. Push your code to a Git repository
-2. Import the project in Vercel
-3. Deploy with zero configuration
-
-### Environment Variables
-
-No environment variables are required for the basic setup.
-
-## Project Structure
-
-```
-trend/
-├── app/              # Next.js App Router pages and layouts
-├── components/       # React components
-├── lib/             # Utility functions and data fetching
-├── public/          # Static assets
-└── openspec/        # OpenSpec change management
-```
-
-## License
-
-MIT
+- **`packages/db-schema`** — Shared `schema.sql` and TypeScript `Database` type (`@trend/db-schema`).

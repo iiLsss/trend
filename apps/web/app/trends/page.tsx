@@ -21,6 +21,16 @@ export default function TrendsPage() {
       category: "大宗商品",
       author: "编辑部",
     },
+    {
+      id: "ai-tools",
+      title: "AI 工具趋势",
+      description:
+        "自动追踪全球 AI 新物种，过滤 AI Washing，拆解核心功能原子，发现碎片化工具的重构整合机会。",
+      status: "daily" as const,
+      lastUpdate: "日更",
+      category: "AI 产品",
+      author: "AI 分析引擎",
+    },
   ];
 
   return (
