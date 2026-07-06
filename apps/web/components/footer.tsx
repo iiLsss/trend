@@ -6,9 +6,9 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div className="md:col-span-2">
-            <h3 className="serif text-2xl font-bold mb-4 text-gray-900">全球趋势</h3>
+            <h3 className="serif text-2xl font-bold mb-4 text-gray-900">灵感档案</h3>
             <p className="text-sm text-gray-600 leading-relaxed max-w-md">
-              我们致力于提供客观、准确的全球宏观趋势分析。通过数据驱动的洞察，帮助读者理解复杂的世界局势。
+              一个持续扩展的个人内容门户：收纳趋势观察、工具教程、AI 产品研究和日常可复用的配置经验。
             </p>
           </div>
           
@@ -17,12 +17,17 @@ export function Footer() {
             <ul className="space-y-3">
               <li>
                 <Link href="/trends" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
-                  所有趋势
+                  趋势追踪
                 </Link>
               </li>
               <li>
-                <Link href="/trends/middle-east-conflict" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
-                  中东冲突
+                <Link href="/guides" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
+                  教程指南
+                </Link>
+              </li>
+              <li>
+                <Link href="/guides/workbuddy-deepseek" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
+                  WorkBuddy 教程
                 </Link>
               </li>
             </ul>
@@ -47,7 +52,7 @@ export function Footer() {
         
         <div className="pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-xs text-gray-500">
-            © {new Date().getFullYear()} 全球趋势追踪器. 保留所有权利.
+            © {new Date().getFullYear()} 灵感档案. 保留所有权利.
           </p>
           <div className="text-xs text-gray-500 space-x-4">
             <Link href="#" className="hover:text-gray-900">隐私政策</Link>

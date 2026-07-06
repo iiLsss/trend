@@ -8,7 +8,7 @@
  */
 
 import Parser from "rss-parser";
-import type { NewsItem } from "@/lib/data";
+import type { NewsItem } from "@/lib/news";
 
 export const FRED_GOLD_SERIES_ID = "NASDAQQGLDI" as const;
 export const FRED_GOLD_VOLATILITY_SERIES_ID = "GVZCLS" as const;

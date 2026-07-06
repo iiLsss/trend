@@ -3,7 +3,6 @@ import { revalidatePath } from "next/cache";
 
 export async function POST() {
   try {
-    revalidatePath("/trends/middle-east-conflict");
     revalidatePath("/trends/gold");
 
     return NextResponse.json({

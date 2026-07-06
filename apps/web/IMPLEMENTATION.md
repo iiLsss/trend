@@ -21,8 +21,8 @@ trend/                          # monorepo root
 - **Framework**: Next.js 16.2.1 (App Router), React 19
 - **Styling**: Tailwind CSS v4
 - **UI**: Lucide React, Radix Tooltip (where used)
-- **Charts**: Recharts (gold / conflict visualizations)
-- **Data**: `rss-parser`, Cheerio (legacy trend pages); **Supabase JS** for AI trends
+- **Charts**: Recharts (gold / guide visualizations)
+- **Data**: `rss-parser`; **Supabase JS** for AI trends
 - **Markdown (briefings)**: `streamdown` + `streamdown/styles.css`; Tailwind scans Streamdown via `@source` in `app/globals.css`
 - **Node**: use `.nvmrc` at repo root (v24.10.0) — Next.js requires `>=20.9.0`
 
@@ -30,13 +30,9 @@ trend/                          # monorepo root
 
 ### Marketing / hub
 
-- **`/`** — Home landing with link to trends
-- **`/trends`** — Topic index (Middle East, Gold, AI 工具)
-
-### Middle East conflict (`/trends/middle-east-conflict`)
-
-- Indicators, timeline chart, faction comparison, RSS-driven live updates (`lib/data.ts`)
-- Manual refresh via `?reloaddate=` and `RefreshButton`
+- **`/`** — Portal home with trend and guide sections
+- **`/trends`** — Trend index (Gold, AI 工具)
+- **`/guides`** — Guide index
 
 ### Gold (`/trends/gold`)
 
@@ -49,6 +45,12 @@ trend/                          # monorepo root
 - **UI**: `AIProductsGrid`, `ReBundlingOpportunities`, `BriefingView` (Streamdown), `FeedbackForm`
 - **Write path**: Server Action `app/trends/ai-tools/actions.ts` inserts `user_feedback`
 - **Empty / error**: `AITrendsUnavailable` when Supabase missing, query fails, or no rows
+
+### WorkBuddy guide (`/guides/workbuddy-deepseek`)
+
+- Step-by-step WorkBuddy x DeepSeek setup guide for beginners
+- Client-side interactions: step switcher, FAQ accordion, JSON copy button, Recharts comparison chart
+- Uses static content only; no backend API, database, or new env vars
 
 ### API routes (`apps/web/app/api`)
 

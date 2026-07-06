@@ -1,4 +1,4 @@
-import { NewsItem } from "@/lib/data";
+import type { NewsItem } from "@/lib/news";
 import { formatDate } from "@/lib/utils";
 
 interface LiveUpdatesTimelineProps {

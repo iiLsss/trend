@@ -1,11 +1,11 @@
 import Link from "next/link";
 
 export function Header() {
-  const today = new Date().toLocaleDateString('zh-CN', { 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric',
-    weekday: 'long'
+  const today = new Date().toLocaleDateString("zh-CN", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    weekday: "long",
   });
 
   return (
@@ -16,6 +16,7 @@ export function Header() {
           <div>{today}</div>
           <div className="flex space-x-6">
             <Link href="/trends" className="hover:text-gray-900 transition-colors">趋势</Link>
+            <Link href="/guides" className="hover:text-gray-900 transition-colors">教程</Link>
             <Link href="/trends/ai-tools" className="hover:text-gray-900 transition-colors">AI 工具</Link>
             <Link href="#" className="hover:text-gray-900 transition-colors">关于</Link>
           </div>
@@ -25,10 +26,10 @@ export function Header() {
         <div className="py-8 text-center border-double-bottom mb-4">
           <Link href="/" className="inline-block hover:opacity-80 transition-opacity">
             <h1 className="serif text-5xl md:text-7xl font-black tracking-tight text-gray-900">
-              全球趋势
+              灵感档案
             </h1>
             <p className="mt-3 text-xs text-gray-500 uppercase tracking-[0.4em] font-bold font-sans">
-              Global Trends Tracker
+              Trends, Guides & Tools
             </p>
           </Link>
         </div>
